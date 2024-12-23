@@ -17,14 +17,14 @@ class Quote extends StatelessWidget {
         Text(
           text,
           style: const TextStyle(
-            fontSize: 15,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
         Text(
           author,
           style: const TextStyle(
-            fontSize: 14,
+            fontSize: 16,
           ),
         ),
       ],
