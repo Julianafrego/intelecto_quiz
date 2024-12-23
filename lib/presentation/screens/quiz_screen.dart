@@ -4,11 +4,11 @@ import 'package:intelecto_quiz/models/question.dart';
 import 'package:intelecto_quiz/providers/quiz_provider.dart';
 import 'package:intelecto_quiz/controllers/quiz_controller.dart';
 import 'package:intelecto_quiz/presentation/widgets/quiz/question_card.dart';
+import 'package:intelecto_quiz/presentation/widgets/quiz/next_question_button.dart';
 
-
-// para quizscreen deseja-se que 
-//1. se exiba uma questao por vez 
-    //1.2 para isso add indicie para rastreio de questao
+// para quizscreen deseja-se que
+//1. se exiba uma questao por vez
+//1.2 para isso add indicie para rastreio de questao
 
 //2. se exiba as respostas embaralhadas
 //3. se exiba um loader enquanto as perguntas carregam
@@ -16,7 +16,6 @@ import 'package:intelecto_quiz/presentation/widgets/quiz/question_card.dart';
 //5. se exiba os botoes para cada alternativa da questao
 //6. se exiba a resposta certa ao final da questao
 //7. se exiba o resultado final ao final do quiz
-
 
 class QuizScreen extends StatefulWidget {
   final String? category;
@@ -29,29 +28,36 @@ class QuizScreen extends StatefulWidget {
 }
 
 class _QuizScreenState extends State<QuizScreen> {
-
   int currentQuestionIndex = 0;
   bool hasAnswered = false;
-  String? selectedAnswer;
+  String? selectedAnswer; // resposta selecionada
   int score = 0;
-  
+  List<String> shuffledAnswers = []; // respostas embaralhadas
+
   late QuizController quizController;
 
   @override
   void initState() {
-     // tela carrega e logo busca-se as perguntas
+    // tela carrega e logo busca-se as perguntas
     super.initState();
     quizController = QuizController(context, score);
     // busca as perguntas
-    quizController.fetchQuestions(
-      category: widget.category,
-      difficulty: widget.difficulty,
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      quizController.fetchQuestions(
+        category: widget.category,
+        difficulty: widget.difficulty,
+      );
+    });
   }
 
   void updateQuestion(int index) {
     setState(() {
-      currentQuestionIndex = index; //  aqui atualizamos para uma nova questao e 
+      currentQuestionIndex = index; //  aqui atualizamos para uma nova questao e
+      hasAnswered = false; // marcamos como nao respondida
+      selectedAnswer = null; // limpa a resposta selecionada
+      shuffledAnswers = Provider.of<QuizProvider>(context, listen: false)
+          .questions[index]
+          .getShuffledAnswers();
     });
   }
 
@@ -62,6 +68,18 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
+  void onAnswerSelected(String answer) {
+    setState(() {
+      selectedAnswer = answer; // Marca a resposta selecionada
+      hasAnswered = true; // Marca como respondida
+      if (answer ==
+          Provider.of<QuizProvider>(context, listen: false)
+              .questions[currentQuestionIndex]
+              .correctAnswer) {
+        score++; // Incrementa a pontuação se a resposta estiver correta
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,23 +92,47 @@ class _QuizScreenState extends State<QuizScreen> {
     }
 
 // abaixo, a questao atual é obtida
- final Question currentQuestion = quizProvider.questions[currentQuestionIndex];
-    
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Quiz App'),
-      ),
+    final Question currentQuestion =
+        quizProvider.questions[currentQuestionIndex];
 
-      body: quizProvider.isLoading
-          ? Center(child: CircularProgressIndicator()) // Loader enquanto busca dados
-          : quizProvider.errorMessage != null
-              ? Center(child: Text(quizProvider.errorMessage!)) // Mostra erro, se houver
-              : ListView.builder( // Mostra as perguntas se tudo ocorrer bem
-                  itemCount: quizProvider.questions.length, // Quantidade de perguntas
-                  itemBuilder: (ctx, index) { // Cria cada card de pergunta, CTX=Contexto
-                    return QuestionCard(question: quizProvider.questions[index]); 
-                  },
-                ),
-    );
+    // para 1° questao, embaralha
+    if (shuffledAnswers.isEmpty) {
+      shuffledAnswers = currentQuestion.getShuffledAnswers();
+    }
+
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Intelecto Quiz'),
+        ),
+        body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Usa o QuestionWidget para exibir a pergunta e as alternativas
+                  QuestionCard(
+                    currentQuestionIndex: currentQuestionIndex,
+                    currentQuestion: currentQuestion,
+                    hasAnswered: hasAnswered,
+                    selectedAnswer: selectedAnswer,
+                    onAnswerSelected: onAnswerSelected,
+                    score: score,
+                    shuffledAnswers:
+                        shuffledAnswers, // Passa as respostas embaralhadas
+                  ),
+                  const SizedBox(height: 20),
+
+                  if (hasAnswered)
+                    ElevatedButton(
+                      onPressed: () {
+                        quizController.goToNextQuestion(
+                          currentQuestion: currentQuestionIndex,
+                          updateQuestion: updateQuestion,
+                          resetAnswerState: resetAnswerState,
+                        );
+                      },
+                      child: const Text("Próxima Questão"),
+                    ),
+                ])));
   }
 }
