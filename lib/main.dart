@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intelecto_quiz/providers/quiz_provider.dart';
 import 'package:intelecto_quiz/presentation/screens/home_screen.dart';
+import 'package:intelecto_quiz/core/app_theme.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -15,8 +17,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Quiz App',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        home: HomeScreen(),
+        theme: AppTheme.theme,
+        home: const HomeScreen(),
       ),
     );
   }
