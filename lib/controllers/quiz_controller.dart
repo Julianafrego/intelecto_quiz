@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intelecto_quiz/providers/quiz_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:intelecto_quiz/presentation/screens/result_screen.dart';
+
 class QuizController {
   BuildContext context;
   int score;
@@ -9,7 +10,7 @@ class QuizController {
   QuizController(this.context, this.score);
 
   void fetchQuestions({
-    int amount = 20,
+    int amount = 10,
     String? category,
     String? difficulty,
   }) {
@@ -22,26 +23,28 @@ class QuizController {
 
   void goToNextQuestion({
     required int currentQuestion, // indice da questao atual
-    required void Function(int)
-        updateQuestion, // callback para atualizar a questao
+    updateQuestion, // callback para atualizar a questao
     required void Function() resetAnswerState,
   }) {
     final quizProvider = Provider.of<QuizProvider>(context, listen: false);
 
     if (currentQuestion < quizProvider.questions.length - 1) {
-      updateQuestion(currentQuestion + 1);
       resetAnswerState();
+
+      updateQuestion(currentQuestion + 1);
     } // se nao for a ultima questao, atualiza o indice da questao
     else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ResultScreen(
-            score: score,
-            totalQuestions: quizProvider.questions.length,
+      if (context.mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ResultScreen(
+              score: score,
+              totalQuestions: quizProvider.questions.length,
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
   }
 

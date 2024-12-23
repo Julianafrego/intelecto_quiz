@@ -18,6 +18,7 @@ class QuizProvider with ChangeNotifier {
     String? category,
     String? difficulty,}) 
     async {
+      
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
