@@ -123,15 +123,11 @@ class _QuizScreenState extends State<QuizScreen> {
                   const SizedBox(height: 20),
 
                   if (hasAnswered)
-                    ElevatedButton(
-                      onPressed: () {
-                        quizController.goToNextQuestion(
-                          currentQuestion: currentQuestionIndex,
-                          updateQuestion: updateQuestion,
-                          resetAnswerState: resetAnswerState,
-                        );
-                      },
-                      child: const Text("Próxima Questão"),
+                    NextQuestionButton(
+                      quizController: quizController,
+                      updateQuestion: updateQuestion,
+                      index: currentQuestionIndex,
+                      resetAnswerState: resetAnswerState,
                     ),
                 ])));
   }
