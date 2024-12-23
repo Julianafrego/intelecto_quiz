@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Intelecto Quiz',
+         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
         home: const HomeScreen(),
       ),
