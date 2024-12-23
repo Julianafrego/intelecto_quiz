@@ -21,6 +21,10 @@ class QuizController {
     );
   }
 
+  void updateScore() {
+    score++; 
+  }
+
   void goToNextQuestion({
     required int currentQuestion, // indice da questao atual
     updateQuestion, // callback para atualizar a questao
@@ -44,6 +48,7 @@ class QuizController {
             ),
           ),
         );
+      
       }
     }
   }

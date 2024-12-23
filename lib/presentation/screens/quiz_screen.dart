@@ -41,6 +41,7 @@ class _QuizScreenState extends State<QuizScreen> {
     // tela carrega e logo busca-se as perguntas
     super.initState();
     quizController = QuizController(context, score);
+    score = 0;
     // busca as perguntas
     WidgetsBinding.instance.addPostFrameCallback((_) {
       quizController.fetchQuestions(
@@ -55,9 +56,7 @@ class _QuizScreenState extends State<QuizScreen> {
       currentQuestionIndex = index; //  aqui atualizamos para uma nova questao e
       hasAnswered = false; // marcamos como nao respondida
       selectedAnswer = null; // limpa a resposta selecionada
-      shuffledAnswers = Provider.of<QuizProvider>(context, listen: false)
-          .questions[index]
-          .getShuffledAnswers();
+      shuffledAnswers = Provider.of<QuizProvider>(context, listen: false).questions[index].getShuffledAnswers();
     });
   }
 
@@ -72,11 +71,9 @@ class _QuizScreenState extends State<QuizScreen> {
     setState(() {
       selectedAnswer = answer; // Marca a resposta selecionada
       hasAnswered = true; // Marca como respondida
-      if (answer ==
-          Provider.of<QuizProvider>(context, listen: false)
-              .questions[currentQuestionIndex]
-              .correctAnswer) {
-        score++; // Incrementa a pontuação se a resposta estiver correta
+      if (answer == Provider.of<QuizProvider>(context, listen: false).questions[currentQuestionIndex].correctAnswer) {
+             quizController.updateScore(); // Atualiza o score no QuizController
+          // Incrementa a pontuação se a resposta estiver correta
       }
     });
   }
