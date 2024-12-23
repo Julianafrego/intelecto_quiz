@@ -49,24 +49,24 @@ class _QuestionCardState extends State<QuestionCard> {
           ),
         ),
         const SizedBox(height: 16),
-        Column(children: [
-          ...widget.shuffledAnswers.map((answer) {
-            // Verifica se a resposta está selecionada e se correta
-            bool isCorrectAnswer =
-                answer == widget.currentQuestion.correctAnswer;
-            bool isSelectedAnswer = answer == widget.selectedAnswer;
+        SingleChildScrollView( 
+        child: Column(
+          children: [
+            ...widget.shuffledAnswers.map((answer) {
+              bool isCorrectAnswer = answer == widget.currentQuestion.correctAnswer;
+              bool isSelectedAnswer = answer == widget.selectedAnswer;
 
-
-            // inkwell = widget que detecta toques e gestos
-           return AnswerCard(
+              return AnswerCard(
                 answer: answer,
                 isSelectedAnswer: isSelectedAnswer,
                 isCorrectAnswer: isCorrectAnswer,
                 hasAnswered: widget.hasAnswered,
-                onTap: () => widget.onAnswerSelected(answer), // Passa a função de seleção
+                onTap: () => widget.onAnswerSelected(answer),
               );
             }).toList(),
-        ]),
+          ],
+        ),
+        ),
       ],
     );
   }
