@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intelecto_quiz/core/system_colors.dart';
 import 'package:intelecto_quiz/presentation/widgets/result/result_message.dart';
 import 'package:intelecto_quiz/presentation/widgets/result/return_home_button.dart';
 
@@ -13,7 +12,7 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Resultado do Quiz'),
+        title: const Text('Result'),
       ),
       body: Center( 
         child: Column(
