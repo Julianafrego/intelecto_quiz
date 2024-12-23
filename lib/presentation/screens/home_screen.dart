@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intelecto_quiz/presentation/widgets/home/category_selection.dart';
 import 'package:intelecto_quiz/presentation/widgets/home/initial_button.dart';
-import 'package:intelecto_quiz/core/system_colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,8 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SystemColors.blue2,
-      appBar: AppBar(title: const Text('Quiz App'), backgroundColor: SystemColors.blue2, centerTitle: true,),
+      appBar: AppBar(title: const Text('Quiz App')),
       body: Container(
         alignment: Alignment.center,
         padding: const EdgeInsets.all(16.0),
