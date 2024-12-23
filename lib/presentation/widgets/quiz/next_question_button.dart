@@ -22,7 +22,7 @@ class NextQuestionButton extends StatelessWidget {
       style: ButtonStyle(
         padding: MaterialStateProperty.all(
             const EdgeInsets.symmetric(horizontal: 70, vertical: 10)),
-        backgroundColor: MaterialStateProperty.all(SystemColors.blue1),
+        backgroundColor: MaterialStateProperty.all(SystemColors.rose1),
       ),
       onPressed: () {
         quizController.goToNextQuestion(

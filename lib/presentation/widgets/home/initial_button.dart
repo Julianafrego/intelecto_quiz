@@ -13,7 +13,7 @@ class InitialButton extends StatelessWidget {
     return ElevatedButton(
               style: ButtonStyle(
                 padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 70, vertical: 16)),
-                backgroundColor: MaterialStateProperty.all(SystemColors.blue1),
+                backgroundColor: MaterialStateProperty.all(SystemColors.rose1),
               ),
               onPressed: () {
                 // Navega para a tela de quiz com as seleções do usuário

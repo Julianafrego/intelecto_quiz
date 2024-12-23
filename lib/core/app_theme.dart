@@ -3,12 +3,12 @@ import 'package:intelecto_quiz/core/system_colors.dart';
 class AppTheme {
   static ThemeData get theme {
     return ThemeData(
-      scaffoldBackgroundColor: SystemColors.blue3,
+      scaffoldBackgroundColor: SystemColors.rose3,
       primarySwatch: Colors.blue, 
       
 
       appBarTheme: const AppBarTheme(
-        backgroundColor: SystemColors.blue3, 
+        backgroundColor: SystemColors.rose3, 
         centerTitle: true, 
         foregroundColor: SystemColors.white, 
       ),

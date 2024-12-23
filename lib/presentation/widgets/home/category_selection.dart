@@ -34,7 +34,7 @@ class _CategorySelectionState extends State<CategorySelection> {
         fontSize: 18,
         color: SystemColors.white,
       ),
-      dropdownColor: SystemColors.blue3,
+      dropdownColor: SystemColors.rose3,
       hint: Text(
         optionSelected,
         style: const TextStyle(
