@@ -22,33 +22,31 @@ class AnswerCard extends StatelessWidget {
     // Definir cor do card
     Color cardColor;
 
-            if (hasAnswered) {
-              if (isSelectedAnswer && isCorrectAnswer) {
-                cardColor = SystemColors.green;
-              } else if (isCorrectAnswer) {
-                cardColor = SystemColors.green2;
-              } else {
-                cardColor = SystemColors.white2;
-              }
-            } else {
-              cardColor = SystemColors.white2;
-            }
+    if (hasAnswered) {
+      if (isSelectedAnswer && isCorrectAnswer) {
+        cardColor = SystemColors.green;
+      } else if (isCorrectAnswer) {
+        cardColor = SystemColors.green2;
+      } else {
+        cardColor = SystemColors.rose0;
+      }
+    } else {
+      cardColor = SystemColors.rose0;
+    }
 
-            // Definir cor do texto
-            Color textColor;
-            if (hasAnswered) {
-              textColor = (isCorrectAnswer)
-                  ? SystemColors.white
-                  : SystemColors.black;
-            } else {
-              textColor = SystemColors.black;
-            }
+    // Definir cor do texto
+    Color textColor;
+    if (hasAnswered) {
+      textColor = (isCorrectAnswer) ? SystemColors.white : SystemColors.black;
+    } else {
+      textColor = SystemColors.black;
+    }
 
-  double widthScreen = MediaQuery.of(context).size.width;
-  double width = widthScreen * 0.9;
+    double widthScreen = MediaQuery.of(context).size.width;
+    double width = widthScreen * 0.9;
     return InkWell(
       onTap: hasAnswered ? null : onTap,
-      child: Card(  
+      child: Card(
         color: cardColor,
         child: Container(
           width: (width),
